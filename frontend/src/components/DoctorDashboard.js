@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 function DoctorDashboard({ currentView = 'dashboard' }) {
   const [patients, setPatients] = useState([]);
@@ -21,11 +22,11 @@ function DoctorDashboard({ currentView = 'dashboard' }) {
   const fetchData = async () => {
     try {
       const [patientsRes, appointmentsRes, therapistsRes, therapiesRes, revenueRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/patients'),
-        axios.get('http://localhost:5000/api/appointments'),
-        axios.get('http://localhost:5000/api/therapists'),
-        axios.get('http://localhost:5000/api/therapies'),
-        axios.get('http://localhost:5000/api/doctor-revenue')
+        axios.get(`${API_BASE_URL}/api/patients`),
+        axios.get(`${API_BASE_URL}/api/appointments`),
+        axios.get(`${API_BASE_URL}/api/therapists`),
+        axios.get(`${API_BASE_URL}/api/therapies`),
+        axios.get(`${API_BASE_URL}/api/doctor-revenue`)
       ]);
       setPatients(patientsRes.data);
       setAppointments(appointmentsRes.data);
@@ -44,7 +45,7 @@ function DoctorDashboard({ currentView = 'dashboard' }) {
   const sendPrescription = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/prescriptions', {
+      await axios.post(`${API_BASE_URL}/api/prescriptions`, {
         ...prescriptionData,
         therapy_ids: prescriptionData.therapy_ids.join(',')
       });

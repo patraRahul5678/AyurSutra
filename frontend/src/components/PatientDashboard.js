@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 function PatientDashboard() {
   const [appointments, setAppointments] = useState([]);
@@ -31,10 +32,10 @@ function PatientDashboard() {
   const fetchData = async () => {
     try {
       const [appointmentsRes, therapiesRes, prescriptionsRes, patientRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/appointments'),
-        axios.get('http://localhost:5000/api/therapies'),
-        axios.get('http://localhost:5000/api/prescriptions'),
-        axios.get('http://localhost:5000/api/patients')
+        axios.get(`${API_BASE_URL}/api/appointments`),
+        axios.get(`${API_BASE_URL}/api/therapies`),
+        axios.get(`${API_BASE_URL}/api/prescriptions`),
+        axios.get(`${API_BASE_URL}/api/patients`)
       ]);
       setAppointments(appointmentsRes.data);
       setTherapies(therapiesRes.data);
@@ -52,7 +53,7 @@ function PatientDashboard() {
     e.preventDefault();
     try {
       const user = JSON.parse(localStorage.getItem('user'));
-      await axios.post('http://localhost:5000/api/appointments', {
+      await axios.post(`${API_BASE_URL}/api/appointments`, {
         ...bookingData,
         patient_id: user.id,
         therapist_name: 'Available Therapist'
@@ -69,7 +70,7 @@ function PatientDashboard() {
   const updateProfile = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/patients/${patientInfo.id}`, profileData);
+      await axios.put(`${API_BASE_URL}/api/patients/${patientInfo.id}`, profileData);
       setPatientInfo(profileData);
       setShowProfile(false);
       alert('Profile updated successfully!');

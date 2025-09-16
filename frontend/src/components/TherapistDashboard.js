@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 function TherapistDashboard() {
   const [appointments, setAppointments] = useState([]);
@@ -16,9 +17,9 @@ function TherapistDashboard() {
   const fetchAppointments = async () => {
     try {
       const [appointmentsRes, prescriptionsRes, revenueRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/appointments'),
-        axios.get('http://localhost:5000/api/prescriptions'),
-        axios.get('http://localhost:5000/api/therapist-revenue')
+        axios.get(`${API_BASE_URL}/api/appointments`),
+        axios.get(`${API_BASE_URL}/api/prescriptions`),
+        axios.get(`${API_BASE_URL}/api/therapist-revenue`)
       ]);
       setAppointments(appointmentsRes.data);
       setPrescriptions(prescriptionsRes.data);
@@ -30,7 +31,7 @@ function TherapistDashboard() {
 
   const updateStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/appointments/${id}`, { status, notes: '' });
+      await axios.put(`${API_BASE_URL}/api/appointments/${id}`, { status, notes: '' });
       fetchAppointments();
     } catch (error) {
       console.error('Error updating appointment:', error);
@@ -44,7 +45,7 @@ function TherapistDashboard() {
 
   const submitCompletion = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/appointments/${completingAppointment.id}`, { 
+      await axios.put(`${API_BASE_URL}/api/appointments/${completingAppointment.id}`, { 
         status: 'completed', 
         notes: completionNotes 
       });
@@ -59,7 +60,7 @@ function TherapistDashboard() {
 
   const updatePrescriptionStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/prescriptions/${id}`, { status });
+      await axios.put(`${API_BASE_URL}/api/prescriptions/${id}`, { status });
       fetchAppointments();
     } catch (error) {
       console.error('Error updating prescription:', error);
