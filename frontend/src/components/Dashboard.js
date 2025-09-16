@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 function Dashboard() {
   const [stats, setStats] = useState({
@@ -17,8 +18,8 @@ function Dashboard() {
   const fetchDashboardData = async () => {
     try {
       const [patientsRes, appointmentsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/patients'),
-        axios.get('http://localhost:5000/api/appointments')
+        axios.get(`${API_BASE_URL}/api/patients`),
+        axios.get(`${API_BASE_URL}/api/appointments`)
       ]);
 
       const patients = patientsRes.data;

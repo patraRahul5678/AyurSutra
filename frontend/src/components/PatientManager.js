@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 function PatientManager() {
   const [patients, setPatients] = useState([]);
@@ -15,7 +16,7 @@ function PatientManager() {
 
   const fetchPatients = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/patients');
+      const response = await axios.get(`${API_BASE_URL}/api/patients`);
       setPatients(response.data);
     } catch (error) {
       console.error('Error fetching patients:', error);
@@ -26,9 +27,9 @@ function PatientManager() {
     e.preventDefault();
     try {
       if (editingPatient) {
-        await axios.put(`http://localhost:5000/api/patients/${editingPatient.id}`, formData);
+        await axios.put(`${API_BASE_URL}/api/patients/${editingPatient.id}`, formData);
       } else {
-        await axios.post('http://localhost:5000/api/patients', formData);
+        await axios.post(`${API_BASE_URL}/api/patients`, formData);
       }
       fetchPatients();
       closeModal();
@@ -40,7 +41,7 @@ function PatientManager() {
   const deletePatient = async (id) => {
     if (confirm('Delete this patient?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/patients/${id}`);
+        await axios.delete(`${API_BASE_URL}/api/patients/${id}`);
         fetchPatients();
       } catch (error) {
         console.error('Error deleting patient:', error);

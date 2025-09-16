@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 function AppointmentManager() {
   const [appointments, setAppointments] = useState([]);
@@ -17,9 +18,9 @@ function AppointmentManager() {
   const fetchData = async () => {
     try {
       const [appointmentsRes, patientsRes, therapiesRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/appointments'),
-        axios.get('http://localhost:5000/api/patients'),
-        axios.get('http://localhost:5000/api/therapies')
+        axios.get(`${API_BASE_URL}/api/appointments`),
+        axios.get(`${API_BASE_URL}/api/patients`),
+        axios.get(`${API_BASE_URL}/api/therapies`)
       ]);
       setAppointments(appointmentsRes.data);
       setPatients(patientsRes.data);
@@ -32,7 +33,7 @@ function AppointmentManager() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/appointments', formData);
+      await axios.post(`${API_BASE_URL}/api/appointments`, formData);
       fetchData();
       closeModal();
     } catch (error) {
@@ -42,7 +43,7 @@ function AppointmentManager() {
 
   const updateStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/appointments/${id}`, { status, notes: '' });
+      await axios.put(`${API_BASE_URL}/api/appointments/${id}`, { status, notes: '' });
       fetchData();
     } catch (error) {
       console.error('Error updating appointment:', error);
@@ -52,7 +53,7 @@ function AppointmentManager() {
   const deleteAppointment = async (id) => {
     if (confirm('Cancel this appointment?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/appointments/${id}`);
+        await axios.delete(`${API_BASE_URL}/api/appointments/${id}`);
         fetchData();
       } catch (error) {
         console.error('Error deleting appointment:', error);

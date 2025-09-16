@@ -9,7 +9,7 @@ import PatientDashboard from './components/PatientDashboard';
 import TherapistDashboard from './components/TherapistDashboard';
 import DoctorDashboard from './components/DoctorDashboard';
 
-const API_URL = 'https://ayursutra-nxdl.onrender.com/';
+const API_URL = 'https://ayursutra-nxdl.onrender.com';
 
 function App() {
   const [user, setUser] = useState(null);

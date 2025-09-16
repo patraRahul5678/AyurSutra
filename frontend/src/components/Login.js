@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 function Login({ role, onLogin, onBack }) {
   const [username, setUsername] = useState('');
@@ -13,7 +14,7 @@ function Login({ role, onLogin, onBack }) {
     setError('');
     try {
       const loginData = role === 'patient' ? { username } : { username, password };
-      const response = await axios.post(`http://localhost:5000/api/login/${role}`, loginData);
+      const response = await axios.post(`${API_BASE_URL}/api/login/${role}`, loginData);
       onLogin(response.data.user, response.data.token);
     } catch (err) {
       const errorMessage = err.response?.data?.error || 'Invalid credentials';
@@ -32,7 +33,7 @@ function Login({ role, onLogin, onBack }) {
     }
     
     try {
-      const response = await axios.post('http://localhost:5000/api/register/patient', registerData);
+      const response = await axios.post(`${API_BASE_URL}/api/register/patient`, registerData);
       alert('Registration successful! You can now login with your email.');
       setShowRegister(false);
       setRegisterData({ name: '', email: '', phone: '', age: '' });
