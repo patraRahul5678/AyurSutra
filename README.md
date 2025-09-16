@@ -1,6 +1,6 @@
 # AyurSutra - Panchakarma Patient Management System
 
-A complete web application for managing Panchakarma patients and therapy scheduling.
+A complete web application for managing Panchakarma patients and therapy scheduling with MongoDB database and responsive design.
 
 ## Features
 
@@ -10,12 +10,14 @@ A complete web application for managing Panchakarma patients and therapy schedul
 - **Therapy Management**: Pre-configured Panchakarma therapies
 - **Role-based Authentication**: Separate login pages for patients, therapists, doctors, and admin
 - **Patient Registration**: Self-registration for new patients
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- **Revenue Tracking**: Track therapist and doctor earnings
 
 ## Tech Stack
 
 **Backend:**
 - Node.js + Express
-- SQLite Database
+- MongoDB with Mongoose
 - JWT Authentication
 - bcryptjs for password hashing
 
@@ -23,7 +25,7 @@ A complete web application for managing Panchakarma patients and therapy schedul
 - React 18
 - Webpack
 - Axios for API calls
-- Responsive CSS
+- Responsive CSS with mobile-first design
 
 ## Quick Setup
 
@@ -89,10 +91,34 @@ Frontend runs on http://localhost:3000
 ### Therapies
 - GET `/api/therapies` - Get all available therapies
 
+### Prescriptions
+- GET `/api/prescriptions` - Get prescriptions
+- POST `/api/prescriptions` - Create prescription
+- PUT `/api/prescriptions/:id` - Update prescription status
+
+### Revenue
+- GET `/api/therapist-revenue` - Get therapist earnings
+- GET `/api/doctor-revenue` - Get doctor consultation fees
+
 ## Database Schema
 
-The application uses SQLite with the following tables:
-- `users` - System users
+The application uses MongoDB with the following collections:
+- `users` - System users (admin, doctors, therapists)
 - `patients` - Patient information
 - `therapies` - Available treatments
 - `appointments` - Scheduled sessions
+- `prescriptions` - Doctor prescriptions
+- `therapistrevenues` - Therapist earnings tracking
+- `doctorrevenues` - Doctor consultation fee tracking
+
+## Responsive Features
+
+- Mobile-first responsive design
+- Touch-friendly interface
+- Horizontal scrolling tables on mobile
+- Optimized layouts for all screen sizes
+- Performance optimizations for mobile devices
+
+## MongoDB Setup
+
+Make sure MongoDB is running locally on `mongodb://localhost:27017` or update the connection string in `server.js` to use MongoDB Atlas or another MongoDB service.
